@@ -1,0 +1,186 @@
+drop table if exists violation;
+create table violation(
+id int primary key auto_increment,
+name varchar(20) NOT NULL,
+userList_id int,
+vehicleList_id int,
+foreign key (userList_id) references userList(id),
+foreign key (vehicleList_id) references vehicleList(id)
+);
+
+alter table violation default character set utf8;
+alter table violation change name name varchar(20) character set utf8;
+
+insert into violation(name,userList_id,vehicleList_id) values
+('张',1,1),
+('李',2,2);
+insert into violation(name,userList_id,vehicleList_id) values('宋',2,1);
+
+
+drop table if exists userList;
+create table userList(
+id int primary key auto_increment,
+name varchar(20),
+sex varchar(5),
+tel varchar(15),
+carNum varchar(20),
+id_card varchar(20),
+check (sex = '男' or sex = '女')
+);
+alter table userList default character set utf8;
+alter table userList change name name varchar(20) character set utf8;
+alter table userList change sex sex varchar(5) character set utf8;
+alter table userList change tel tel varchar(15) character set utf8;
+alter table userList change carNum carNum varchar(20) character set utf8;
+alter table userList change id_card id_card varchar(20) character set utf8;
+
+insert into userList(name,sex,tel,carNum,id_card) values
+('张','男','13562738376','陕A12345','6253418375634738292'),
+('李','女','13564538376','陕A13245','6352738492747572947');
+
+
+drop table if exists vehicleList;
+create table vehicleList(
+id int primary key auto_increment,
+carNum varchar(20),
+`type` varchar(10) NOT NULL,
+`desc` text
+);
+
+alter table vehicleList default character set utf8;
+alter table vehicleList change carNum carNum varchar(20) character set utf8;
+alter table vehicleList change `type` `type` varchar(10) character set utf8;
+alter table vehicleList change `desc` `desc` text character set utf8;
+
+insert into vehicleList(id,carNum,`type`,`desc`) values
+(1,'陕A12345','小轿车','闯红灯'),
+(2,'陕A13245','面包车','压线');
+
+
+
+create database homework2;
+drop table if exists canteen;
+create table canteen(
+id int primary key auto_increment,
+name varchar(20) comment '食堂名称'
+);
+alter table canteen default character set utf8;
+alter table canteen change name name varchar(20) character set utf8;
+
+insert into canteen(name) values
+('新食堂一楼'),
+('新食堂二楼'),
+('老食堂一楼'),
+('老食堂二楼'),
+('老食堂三楼');
+
+	drop table if exists windows;
+	create table windows(
+	id int primary key auto_increment,
+	name varchar(30) comment '窗口名称',
+	canteen_id int,
+	foreign key (canteen_id) references canteen(id)
+	);
+alter table windows default character set utf8;
+alter table windows change name name varchar(30) character set utf8;
+insert into windows(name,canteen_id) values
+('黄焖鸡米饭',5),
+('石锅饭',4),
+('正新鸡排',4),
+('泡泡鸡',3),
+('冒菜',1);
+
+drop table if exists charge;
+create table charge(
+id int primary key auto_increment,
+name varchar(30) NOT NULL comment '打饭名称',
+mon decimal(5,2),
+remarks text comment '备注',
+winsows_id int,
+foreign key (winsows_id) references windows(id) 
+);
+alter table charge default character set utf8;
+alter table charge change name name varchar(30) character set utf8;
+alter table charge change text text character set utf8;
+
+
+
+
+create database Dormitory;
+use Dormitory;
+drop table if exists buidings;
+create table buidings(
+id int primary key,
+dormNum int comment '宿舍楼号',
+dormSex varchar(5),
+check (dormSex = '男' or dormSex = '女')
+);
+alter table buidings default character set utf8;
+alter table buidings change dormSex dormSex varchar(5) character set utf8;
+
+drop table if exists floors;
+create table floors(
+id int primary key auto_increment,
+region varchar(2) comment '区段',
+roomNum int,
+check_on varchar(5) default 'NO',
+buidings_id int,
+check(region = 'A' or region = 'B'),
+foreign key (buidings_id) references buidings(id)
+);
+alter table floors default character set utf8;
+alter table floors change check_on check_on varchar(5) character set utf8;
+alter table floors change region region varchar(2) character set utf8;
+
+	drop table if exists students;
+	create table students(
+	id int primary key,
+	num varchar(15) comment '学号',
+	name varchar(20) default 'NULL',
+	tel varchar(15), 
+	college varchar(20) comment '学院',
+	floors_id int,
+	foreign key(floors_id) references floors(id)
+	);
+alter table students default character set utf8;
+alter table students change num num varchar(15) character set utf8;
+alter table students change name name varchar(20) character set utf8;
+alter table students change tel tel varchar(15) character set utf8;
+alter table students change college college varchar(20) character set utf8;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select stu.name,sum(score) from sudent stu,score sco where stu.id = sco.student_id group by stu,id;
+
+
+insert into persons values('张三',21,'男',180.4,'2000-03-06');
+insert into persons values('李四',20,'男',181.65,'2001-05-09');
+
+alter table persons default character set utf8;
+alter table persons change name name varchar(20) character set utf8;
+alter table persons change sex sex varchar(20) character set utf8;
+
+insert into persons(name,age,sex) values
+('曹操',52,'男'),
+('大乔',63,'女');
+
+select name from persons; 
+select name,age from persons;
+select name as 名字 from persons;
+
+
+
